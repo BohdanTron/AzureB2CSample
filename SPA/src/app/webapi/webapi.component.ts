@@ -2,8 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { protectedResources } from '../auth-config';
 
-type ProfileType = {
-  name?: string
+type WeatherForecast = {
+  date: Date;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string | null;
+}
+
+type WeatherForecastResult = {
+  result: WeatherForecast[]
 };
 
 @Component({
@@ -13,20 +20,22 @@ type ProfileType = {
 })
 export class WebapiComponent implements OnInit {
   apiEndpoint: string = protectedResources.api.endpoint;
-  profile!: ProfileType;
+  failEndpoint: string = protectedResources.api.failingEndpoint;
+
+  weatherForecast: WeatherForecast[] = [];
 
   constructor(
     private http: HttpClient
   ) { }
 
   ngOnInit() {
-    this.getProfile();
+    this.getForecast();
   }
 
-  getProfile() {
+  getForecast() {
     this.http.get(this.apiEndpoint)
-      .subscribe(profile => {
-        this.profile = profile;
+      .subscribe((forecast: any) => {
+        this.weatherForecast = forecast;
       });
   }
 }

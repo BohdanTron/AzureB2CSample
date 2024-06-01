@@ -1,7 +1,20 @@
 <h1>The web API returns:</h1>
-<div>
-  <p><strong>Name: </strong> {{profile?.name}}</p>
-</div>
+<table>
+  <tr>
+    <th>date</th>
+    <th>temperatureC</th>
+    <th>temperatureF</th>
+    <th>summary</th>
+  </tr>
+  @for(r of weatherForecast; track r){
+  <tr>
+    <td>{{r.date}}</td>
+    <td>{{r.temperatureC}}</td>
+    <td>{{r.temperatureF}}</td>
+    <td>{{r.summary}}</td>
+  </tr>
+  }
+</table>
 
 <div class="footer-text">
   Web API: {{apiEndpoint}}
